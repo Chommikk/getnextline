@@ -58,7 +58,7 @@ char	*substr(char const *s, unsigned int start, size_t len)
 	return (sub);
 }
 
-char	*nfound(char **buff, char *str, ssize_t *i)
+char	*nfound(char **buff, char **str, ssize_t *i)
 {
 	buff[1] = substr(&buff[0][i[0] + 1], 0, BUFFER_SIZE);
 	if (buff[1] == NULL)
@@ -66,23 +66,19 @@ char	*nfound(char **buff, char *str, ssize_t *i)
 	buff[3] = substr(buff[0], 0, i[0] + 2);
 	if (buff[3] == NULL)
 		return (NULL);
-	buff[2] = strjoinf2(buff[3], str);
+	buff[2] = strjoinf2(buff[3], *str);
 	if (buff[2] == NULL)
 		return (NULL);
-	str = buff[1];
+	*str = buff[1];
 	free(buff[3]);
 	free(buff[0]);
 	return (buff[2]);
 }
 
-void	freeall(void *ptr1, void *ptr2, void *ptr3)
+void	ft_free(char **ptr)
 {
-	if (ptr1)
-		free(ptr1);
-	if (ptr2)
-		free(ptr2);
-	if (ptr3)
-		free(ptr3);
+	free(*ptr);
+	*ptr = NULL;
 }
 
 char	*get_next_line(int fd)
@@ -99,13 +95,13 @@ char	*get_next_line(int fd)
 	{
 		i[1] = read(fd, buff[0], BUFFER_SIZE);
 		if (i[1] == -1 || i[1] == 0)
-			return (free(buff[0]), NULL);
+			return (free(buff[0]), ft_free(&str), NULL);
 		buff[0][i[1]] = 0;
 		i[0] = 0;
 		while (buff[0][i[0]])
 		{
 			if (buff[0][i[0]] == '\n' && buff[0][i[0]])
-				return (nfound(buff, str, i));
+				return (nfound(buff, &str, i));
 			i[0]++;
 		}
 		str = strjoinf2(buff[0], str);
