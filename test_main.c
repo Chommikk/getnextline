@@ -25,7 +25,6 @@ int main()
 	printf("%stest |",line);
 	free(line);
 	
-/*
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
@@ -44,6 +43,5 @@ int main()
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
-*/
 
 }
