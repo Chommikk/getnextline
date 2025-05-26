@@ -12,7 +12,7 @@
 
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 999 
+# define BUFFER_SIZE 4 
 
 #endif // ! BUFFER_SIZE
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <stddef.h>
 # include <limits.h>
+# include <stdint.h>
 
 typedef struct s_data
 {
