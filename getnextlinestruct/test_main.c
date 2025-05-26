@@ -18,34 +18,39 @@
 
 int main()
 {
-	char	 *filename = "text.txt";
+	char	 *filename = "testempty";
 	int		fd = open(filename, O_RDWR);
 	char	*line;
+	
+
+	line = get_next_line(fd);
+	printf("%stest |",line);
+	free(line);
+	while(line)
+	{
+		line = get_next_line(fd);
+		printf("%stest |",line);
+		free(line);
+	}
+	/*
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
-/*	
-	line = get_next_line(fd);
-	printf("%stest |",line);
-//	free(line);
-	line = get_next_line(fd);
-	printf("%stest |",line);
-//	free(line);
 	
 	line = get_next_line(fd);
 	printf("%stest |",line);
-//	free(line);
+	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
-//	free(line);
+	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
-//	free(line);
+	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
-//	free(line);
-*/
+	free(line);
+	*/
 }

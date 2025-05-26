@@ -12,9 +12,10 @@
 
 
 #ifndef BUFFER_SIZE
+//BUFFER_SIZE has to be positive number
 # define BUFFER_SIZE 4 
 
-#endif // ! BUFFER_SIZE
+#endif 
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
@@ -27,19 +28,13 @@
 
 typedef struct s_data
 {
-	char	buff[BUFFER_SIZE + 1];
-	char	*storage;
+	char	buff[(int)BUFFER_SIZE + 1];
 	char	*tmp;
 	char	*rt;
 	ssize_t	readcounter;
 	ssize_t	i1;
 	ssize_t	i2;
 } t_data;
-
-
 char	*get_next_line(int fd);
-
-
-
 #endif
 
