@@ -18,7 +18,7 @@
 
 int main()
 {
-	char	 *filename = "testempty";
+	char	 *filename = "text.txt";
 	int		fd = open(filename, O_RDWR);
 	char	*line;
 	
