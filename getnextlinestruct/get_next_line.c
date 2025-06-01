@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdio.h>
 // strjoin but frees the second argument
 // ssize_t ft_read(int fd, void *buf, size_t nbyte);
 char	*strjoinf2(char *buff, char *str)
@@ -26,7 +25,7 @@ char	*strjoinf2(char *buff, char *str)
 		i[1]++;
 	fin = malloc((i[1] + i[0] + 1) * sizeof(char));
 	if (fin == NULL)
-		return (NULL);
+		return (free(str), NULL);
 	i[1] = 0;
 	while (buff && buff [i[1]++])
 		fin[i[0] + i[1] - 1] = buff[i[1] - 1];
@@ -38,12 +37,16 @@ char	*strjoinf2(char *buff, char *str)
 	return (fin);
 }
 
-void	initialize(t_data *data)
+int	initialize(t_data *data)
 {
 	data->tmp = NULL;
 	data->rt = NULL;
+	data->buff = malloc(BUFFER_SIZE + 1);
+	if (data->buff == NULL)
+		return (-1);
 	data->readcounter = BUFFER_SIZE;
 	data->i1 = 0;
+	return (1);
 }
 
 void	freeall(t_data *data, char **str)
@@ -54,39 +57,21 @@ void	freeall(t_data *data, char **str)
 	data->rt = NULL;
 	free(*str);
 	*str = NULL;
-}
-
-char	*substr(char const *s, unsigned int start, size_t len)
-{
-	char	*sub;
-	size_t	counter;
-
-	if (!s)
-		return (NULL);
-	sub = malloc(sizeof(char) * len + 2);
-	if (sub == 0)
-		return (0);
-	counter = 0;
-	while (counter < len && s[start + counter])
-	{
-		sub[counter] = s[start + counter];
-		counter ++;
-	}
-	sub[counter] = 0;
-	return (sub);
+	free(data->buff);
+	data->buff = NULL;
 }
 
 char	*nfound(t_data *data, char **str)
 {
-	data->rt = substr(*str, 0, data->i1 + 1);
+	data->rt = ft_substr(*str, 0, data->i1 + 1);
 	if (data->rt == NULL)
 		return (freeall(data, str), NULL);
-	data->tmp = substr(*str, data->i1 + 1, BUFFER_SIZE + 1);
+	data->tmp = ft_substr(*str, data->i1 + 1, BUFFER_SIZE + 1);
 	if (data->tmp == NULL)
 		return (freeall(data, str), NULL);
 	free(*str);
 	*str = data->tmp;
-	return (data->rt);
+	return (free(data->buff), data->rt);
 }
 
 char	*get_next_line(int fd)
@@ -94,7 +79,8 @@ char	*get_next_line(int fd)
 	static char	*str = NULL;
 	t_data		data[1];
 
-	initialize(data);
+	if (-1 == initialize(data))
+		return (freeall(data, &str), NULL);
 	while (1)
 	{
 		while (str && str[data->i1])
@@ -111,6 +97,6 @@ char	*get_next_line(int fd)
 		if (str == NULL)
 			return (freeall(data, &str), NULL);
 		if (data->readcounter == 0)
-			return (free(str), str = NULL, data->rt);
+			return (free(str), str = NULL, free(data->buff), data->rt);
 	}
 }

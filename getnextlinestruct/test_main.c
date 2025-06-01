@@ -22,17 +22,12 @@ int main()
 	int		fd = open(filename, O_RDWR);
 	char	*line;
 	
-
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
-	while(line)
-	{
-		line = get_next_line(fd);
-		printf("%stest |",line);
-		free(line);
-	}
-	/*
+	line = get_next_line(fd);
+	printf("%stest |",line);
+	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
@@ -52,5 +47,4 @@ int main()
 	line = get_next_line(fd);
 	printf("%stest |",line);
 	free(line);
-	*/
 }
