@@ -63,6 +63,7 @@ void	freeall(t_data *data, char **str)
 
 char	*nfound(t_data *data, char **str)
 {
+	data->i1 --;
 	data->rt = ft_substr(*str, 0, data->i1 + 1);
 	if (data->rt == NULL)
 		return (freeall(data, str), NULL);
@@ -83,20 +84,20 @@ char	*get_next_line(int fd)
 		return (freeall(data, &str), NULL);
 	while (1)
 	{
-		while (str && str[data->i1])
-		{
-			if (str[data->i1] == '\n')
+		while (str && str[data->i1 ++])
+			if (str[data->i1 - 1] == '\n')
 				return (nfound(data, &str));
-			data->i1 ++;
-		}
 		data->readcounter = read(fd, data->buff, BUFFER_SIZE);
 		if (data->readcounter == -1)
 			return (freeall(data, &str), NULL);
+		if (data->readcounter == 0)
+		{
+			data->rt = str;
+			return (str = NULL, free(data->buff), data->rt);
+		}
 		data->buff[data->readcounter] = 0;
 		str = strjoinf2(data->buff, str);
 		if (str == NULL)
 			return (freeall(data, &str), NULL);
-		if (data->readcounter == 0)
-			return (free(str), str = NULL, free(data->buff), data->rt);
 	}
 }

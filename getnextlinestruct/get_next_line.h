@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4 
+#  define BUFFER_SIZE 3
 # endif
 
 # include <stdlib.h>
@@ -30,7 +30,6 @@ typedef struct s_data
 	char	*rt;
 	ssize_t	readcounter;
 	ssize_t	i1;
-	ssize_t	i2;
 }	t_data;
 
 char	*ft_substr(char const *s, unsigned int start, size_t len);
