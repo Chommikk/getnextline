@@ -84,8 +84,8 @@ char	*get_next_line(int fd)
 		return (freeall(data, &str), NULL);
 	while (1)
 	{
-		while (str && str[data->i1 ++])
-			if (str[data->i1 - 1] == '\n')
+		while (str && str[data->i1])
+			if (str[data->i1 ++] == '\n')
 				return (nfound(data, &str));
 		data->readcounter = read(fd, data->buff, BUFFER_SIZE);
 		if (data->readcounter == -1)

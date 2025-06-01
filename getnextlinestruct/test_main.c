@@ -21,9 +21,15 @@ int main()
 	char	 *filename = "text.txt";
 	int		fd = open(filename, O_RDWR);
 	char	*line;
-	
-	line = get_next_line(fd);
-	printf("%stest |",line);
+	line = (char *)1;
+	while (line != NULL)
+	{
+			line = get_next_line(fd);
+			printf("%s\n", line);
+			free(line);
+	}
+
+/* 	printf("%stest |",line);
 	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
@@ -46,5 +52,5 @@ int main()
 	free(line);
 	line = get_next_line(fd);
 	printf("%stest |",line);
-	free(line);
+	free(line); */
 }
